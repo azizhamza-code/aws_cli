@@ -11,3 +11,11 @@ cmd of some aws_cli to back to
 
 ## query api
     aws apigatewayv2 list-apis --query 'Items[*].[ApiName,ApiId]'
+    
+    
+## alternative 
+    # Get the API ID of the HTTP API
+api_id=$(aws apigatewayv2 get-apis | jq -r '.Items[] | select(.Name | contains("http")) | .ApiId')
+
+## Clean up HTTP API with AWS CLI.
+    aws apigatewayv2 delete-api --api-id $api_id
